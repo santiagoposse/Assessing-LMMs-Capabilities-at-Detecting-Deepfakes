@@ -1,0 +1,11 @@
+# for pyenv
+.python-version
+
+# for OSX
+.DS_Store
+*/.DS_Store
+
+/inpainting
+/inpainting_sample
+/wiki
+/wiki_sample
