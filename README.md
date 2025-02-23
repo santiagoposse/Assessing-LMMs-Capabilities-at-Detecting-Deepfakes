@@ -116,7 +116,7 @@ images. The only model to get a significant increase in deepfake detection was M
 With both human evaluation scoring and binary classification prompts, there is a trend of the models being confident in the real image responses, but on deepfake images even if they are right, tend to cast doubt. 
 This is most likely a security response because of the sensitivity that occurs when evaluating deepfakes. Additonally, a hyperspecific prompt sees a decrease in preformance compared to a less restrictive prompt. 
 
-## Conclusion and Further Test
+## Conclusion and Further Testing
 
 Based on the results small open source models tend to struggle at detecting deepfake images. By using different prompts, there is an increase of preformance, but introducing hyperspecific amomalies to look out for does not lead
 to better preformance. To continue testing more models can be implemented and in addition different sizes of models. 
