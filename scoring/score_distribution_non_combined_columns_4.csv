@@ -1,6 +1,6 @@
-,LLaVA wiki 4,LLaVA inpainting 4,LLaVA-LLaMA wiki 4,LLaVA-LLaMA inpainting 4,minicpm wiki 4,minicpm inpainting 4,
-1,5,4,2,3,0,0,
-2,7,61,10,63,23,45,
-3,15,7,10,1,10,3,
-4,19,19,21,19,22,37,
-5,54,9,57,14,45,15,
+,LLaVA wiki 4,LLaVA inpainting 4,LLaVA-LLaMA wiki 4,LLaVA-LLaMA inpainting 4,minicpm wiki 4,minicpm inpainting 4,BakLLaVA wiki 4,BakLLaVA inpainting 4,Llama3 wiki 4,Llama3 inpainting 4,gemma3 wiki 4,gemma3 inpainting 4
+1,5,4,2,3,0,0,14,20,0,2,0,0
+2,7,61,10,63,23,45,9,56,8,57,5,7
+3,15,7,10,1,10,3,11,8,26,34,1,6
+4,19,19,21,19,22,37,49,13,2,2,82,86
+5,54,9,57,14,45,15,17,3,64,5,12,1

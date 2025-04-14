@@ -1,6 +1,6 @@
-,LLaVA 4 Combined,LLaVA-LLaMA 4 Combined,MiniCPM 4 Combined
-1,9,5,0
-2,68,73,68
-3,22,11,13
-4,38,40,59
-5,63,71,60
+,LLaVA Combined,LLaVA-LLaMA Combined,MiniCPM Combined,BakLLaVA Combined,Llama3 Combined,gemma3 Combined
+1,9,5,0,34,2,0
+2,68,73,68,65,65,12
+3,22,11,13,19,60,7
+4,38,40,59,62,4,168
+5,63,71,60,20,69,13
