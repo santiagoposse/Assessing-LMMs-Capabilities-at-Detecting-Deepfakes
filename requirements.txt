@@ -1,0 +1,6 @@
+matplotlib==3.10.1
+numpy==2.2.5
+ollama==0.4.8
+pandas==2.2.3
+Pillow==11.2.1
+scikit_learn==1.6.1
