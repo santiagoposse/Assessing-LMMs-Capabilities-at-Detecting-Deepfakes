@@ -2,7 +2,20 @@
 
 Using different open source models and prompting techniques
 
+A more indepth analysis can be found in the <a href="./Assessing Open Source LMMs.pdf" target="_blank">Assessing Open Source LMMs.pdf</a> paper.
+
 Original dataset can be found here: https://huggingface.co/datasets/OpenRL/DeepFakeFace
+
+## Installation Setup
+
+- Software
+  - Download <a href="https://ollama.com/"> Ollama</a>
+    - All models used can be found from the Ollama webiste
+    - To install a model run `ollama run "model_name"` in a terminal
+    - For further testing or if you want to run other models not available from Ollama `.gguf` files can be imported 
+    - For more information please reference the Ollama documentation 
+  - Python version 3.12.8
+    - Install dependencies from requirements.txt
 
 ## Why it is Important
 
@@ -45,7 +58,9 @@ The evaluation focuses on measuring how models react to different image types.
 
 - Inpainting Accuracy: Measures accuracy when identifying deepfake images.
 
-- Average Accuracy: The average of Wiki Accuracy and Inpainting Accuracy.
+- Average Accuracy across both image sets
+
+- F1 score calculated across both image sets
 
 ### Prompts 3 and 4 (Qualitative Scoring)
 
@@ -69,54 +84,44 @@ This scoring method provides a qualitative way to measure correctness, coherence
 The results from Prompt 1 indicate a significant discrepancy in detecting real versus deepfake images. Models generally performed poorly when identifying deepfake images, 
 suggesting they struggled to detect anomalies in the Inpainting dataset. This may be due to the simplicity of the yes/no response required by Prompt 1.
 
-- LLaVA: Did not excel in any category, did relatively well against real images.
-
-- LLaVA-Llama: Demonstrated the best overall average accuracy (56.82%) due to better performance on deepfakes (44.68%).
-
-- MiniCPM-V: Exhibited the highest accuracy on real images (99.35%) but the lowest on deepfakes (3.52%), indicating a bias toward real images.
-
-| **Model**         | **Wiki (%)** | **Inpainting (%)** | **AVG (%)** |
+| **Model**         | **Wiki (%)** | **Inpainting (%)** |**F1 Score** |
 |-------------------|--------------|--------------------|-------------|
-| **LLaVA**         | 79.32        | 23.63              | 51.18       |
-| **LLaVA-Llama**   | 68.95        | **44.68**          | **56.82**   |
-| **MiniCPM-V**     | **99.35**    | 3.52               | 51.43       |
-
-These results highlight the difficulty models face when detecting subtle manipulations in deepfake images, particularly when prompts provide limited guidance.
+| **LLaVA**         | 79.32        | 23.63              | 0.329       |
+| **LLaVA-Llama**   | 68.95        | **44.68**          | **0.509**   |
+| **MiniCPM-V**     | 99.35        | 3.52               | 0.068       |
+| **BakLLaVA**      | 91.43        | 23.04              | 0.350       |
+| **LLaMA 3**       | 99.90        | 01.43              | 0.028       |
+| **Gemma 3**       | **99.92**    | 06.22              | 0.117       |
 
 ### Prompt 2
 From propmt 2 there is an increase across all models at detecting the deepfake images but suffer in their accuracy for real images. This is likely due to how prompt 2 
 is more ambiguous causing the models to generalize more and detecting slight photo editing as deepfake anomalies.
 
-- LLaVA: Saw minimal loss in accuracy for real images but an increase deepfake detection.
-
-- LLaVA-Llama: Demonstrated the best overall average accuracy (56.55%) due to better performance on deepfakes (46.22%) but saw a large decress in real image accuracy.
-
-- MiniCPM-V: Exhibited the highest accuracy on real images (97.69%) but the lowest on deepfakes (15.14%), the bias toward real images was reduced but is still significant.
-
-| **Model**         | **Wiki (%)** | **Inpainting (%)** | **AVG (%)** |
+| **Model**         | **Wiki (%)** | **Inpainting (%)** |**F1 Score** |
 |-------------------|--------------|--------------------|-------------|
-| **LLaVA**         | 74.30        | 34.87              | 54.59       |
-| **LLaVA-Llama**   | 66.87        | **46.22**          | **56.55**   |
-| **MiniCPM-V**     | **97.69**    | 15.14              | 52.29       |
+| **LLaVA**         | 74.30        | 34.87              | 0.515       |
+| **LLaVA-Llama**   | 66.87        | 46.22              | 0.566       |
+| **MiniCPM-V**     | 97.69        | 15.14              | 0.259       |
+| **BakLLaVA**      | 61.28        | **56.41**          | **0.578**   |
+| **LLaMA 3**       | **98.63**    | 05.72              | 0.107       |
+| **Gemma 3**       | 91.11        | 21.74              | 0.333       |
 
 ### Prompt 3
 
-Human Evaluation scoring for prompt 3. Wiki Scores tend to be confident and correct. Inpainting scores are mostly incoherent or in low confidence. In general, models preform vastly different
-on the same prompts. This trend can be seen with high the frequency of purple is for 'Wiki' images but either wrong or doubtful for 'Inpainting' images.
+Human Evaluation distribution for prompt 3. Wiki Scores tend to be confident and correct. Inpainting scores are mostly incorrect or the model refuses to respond. In general, the distribution 
+of responses are inverse from real and deepfake images.
 
-<img src="scoring/prompt_3_visual.png" width="1000"/>
+<img src="scoring/prompt_3_plots.png" width="1000"/>
 
 ### Prompt 4
 
-Human Evaluation scoring for prompt 4. Since prompt 4 is highly specific and forces the models to look for specific artifacts there is a noticable difference is lower preformance especially in 'Wiki'
-images. The only model to get a significant increase in deepfake detection was MiniCPM-V but comparing to the other models there is lower preformance across the board.
+Human Evaluation scoring for prompt 4. Similar trends appear like in prompt 3 with some outliers gaining significant improvements. Increasing how specific a particular prompt is written does 
+not lead to general improvements.
 
-<img src="scoring/prompt_4_visual.png" width="1000"/>
+<img src="scoring/prompt_4_plots.png" width="1000"/>
 
 With both human evaluation scoring and binary classification prompts, there is a trend of the models being confident in the real image responses, but on deepfake images even if they are right, tend to cast doubt. 
-This is most likely a security response because of the sensitivity that occurs when evaluating deepfakes. Additonally, a hyperspecific prompt sees a decrease in preformance compared to a less restrictive prompt. 
+This is most likely a security response because of the sensitivity that occurs when evaluating deepfakes. Additonally, a hyperspecific prompt sees a decrease in preformance compared to a less restrictive prompt.
 
-## Conclusion and Further Testing
-
-Based on the results small open source models tend to struggle at detecting deepfake images. By using different prompts, there is an increase of preformance, but introducing hyperspecific amomalies to look out for does not lead
-to better preformance. To continue testing more models can be implemented and in addition different sizes of models. 
+## Conclusion
+This work presents a focused evaluation of the capabilities of small open source large multimodal models to detect deepfakes using progressively complex prompts. By leveraging a dataset with subtle facial anomalies and integrating both quantitative and qualitative analyses, it is uncovered that prompt design, model architecture, and task framing can influence model performance. The findings highlight that while small LMMs can detect real images, their deepfake detection capabilities are dependent on prompt structure and types of anomalies present. For future work, there will be a larger focus on reducing bias by expanding the amount of human evaluators. Introduce additional evaluation techniques to test how model architecture can affect performance and detection. Additionally, expanding the diversity of the dataset to account for different techniques of augmentation seen across different generative methods.
